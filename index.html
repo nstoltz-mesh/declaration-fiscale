@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Déclaration fiscale 2025 — Nicolas Stoltz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'FKGroteskNeue';
+            src: url('https://r2cdn.perplexity.ai/fonts/FKGroteskNeue.woff2') format('woff2');
+        }
+        :root {
+            --color-background:   #ffffff;
+            --color-surface:      #f5f7f5;
+            --color-text:         #00221c;
+            --color-text-secondary: #749670;
+            --color-text-light:   rgba(0,34,28,0.65);
+            --color-primary:      #018476;
+            --color-primary-dark: #00221c;
+            --color-primary-hover:#4e7a51;
+            --color-secondary:    #dce8dc;
+            --color-secondary-hover: #c8d8c8;
+            --color-border:       #c8d8c8;
+            --color-card-border:  #c8d8c8;
+            --color-error:        #c0152f;
+            --ns-secondary:       #A5cfe3;
+            --font-family-base:   'FKGroteskNeue', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-family-display:'Playfair Display', Georgia, serif;
+            --shadow-sm:  0 1px 3px rgba(0,34,28,0.04);
+            --shadow-md:  0 4px 12px rgba(0,34,28,0.06);
+            --shadow-lg:  0 8px 24px rgba(0,34,28,0.10);
+            --radius-base: 8px;
+            --radius-lg:   12px;
+            --duration-fast: 150ms;
+            --ease-standard: cubic-bezier(0.16,1,0.3,1);
+        }
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        html {
+            font-family: var(--font-family-base);
+            font-size: 14px;
+            color: var(--color-text);
+            background: var(--color-background);
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.5;
+        }
+        body { min-height:100vh; display:flex; flex-direction:column; }
+
+        /* ── HEADER ── */
+        .app-header {
+            width: 100%;
+            background: linear-gradient(135deg, #00221c 0%, #018476 100%);
+            padding: 48px 64px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .app-header__content { display:flex; flex-direction:column; align-items:center; max-width:720px; }
+        .app-header__badge {
+            background: rgba(165,207,227,0.18);
+            color: #A5cfe3;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            padding: 5px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(165,207,227,0.3);
+            margin-bottom: 16px;
+        }
+        .app-header__title {
+            font-family: var(--font-family-display);
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0 0 12px 0;
+            line-height: 1.2;
+        }
+        .app-header__subtitle {
+            font-size: 0.95rem;
+            color: #A5cfe3;
+            margin: 0 0 28px 0;
+            max-width: 520px;
+            line-height: 1.65;
+        }
+        .header-cta-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .btn-header {
+            padding: 11px 24px;
+            border-radius: var(--radius-base);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all var(--duration-fast) var(--ease-standard);
+            font-family: var(--font-family-base);
+        }
+        .btn-header--primary {
+            background: #ffffff;
+            color: #00221c;
+            border: none;
+        }
+        .btn-header--primary:hover { background: #e8f0e8; }
+        .btn-header--outline {
+            background: transparent;
+            color: #ffffff;
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+        .btn-header--outline:hover { background: rgba(255,255,255,0.1); }
+
+        @media (max-width: 768px) {
+            .app-header { padding: 32px 24px; }
+            .app-header__title { font-size: 1.7rem; }
+            .header-cta-row { flex-direction: column; align-items: center; }
+        }
+
+        /* ── LAYOUT ── */
+        .main-content-wrap { flex:1; padding: 40px 0; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+        .section-title {
+            font-family: var(--font-family-display);
+            font-size: 1.5rem;
+            color: var(--color-primary-dark);
+            margin-bottom: 20px;
+        }
+        .section-intro {
+            font-size: 0.92rem;
+            color: var(--color-text-light);
+            line-height: 1.7;
+            margin-bottom: 28px;
+            max-width: 700px;
+        }
+
+        /* ── GRILLE 2 COL ── */
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+        .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+        @media (max-width: 900px) { .three-col { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 600px) {
+            .two-col, .three-col { grid-template-columns: 1fr; }
+        }
+
+        /* ── CARD ── */
+        .card {
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--color-card-border);
+            transition: box-shadow var(--duration-fast) var(--ease-standard);
+        }
+        .card:hover { box-shadow: var(--shadow-md); }
+        .card h2 {
+            color: var(--color-primary-dark);
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--color-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card p { font-size: 0.9rem; color: var(--color-text-light); line-height: 1.65; }
+
+        /* ── INFO LIST ── */
+        .info-list { list-style: none; padding: 0; }
+        .info-list li {
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+            font-size: 0.9rem;
+            color: var(--color-text-light);
+            line-height: 1.55;
+        }
+        .info-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--color-primary);
+            font-weight: 700;
+        }
+
+        /* ── SERVICES CARD HIGHLIGHT ── */
+        .card--highlight {
+            background: linear-gradient(135deg, #00221c 0%, #015c52 100%);
+            color: #fff;
+            border: none;
+        }
+        .card--highlight h2 { color: #fff; border-bottom-color: rgba(255,255,255,0.15); }
+        .card--highlight p { color: rgba(255,255,255,0.75); }
+        .card--highlight .info-list li { color: rgba(255,255,255,0.8); }
+        .card--highlight .info-list li::before { color: #A5cfe3; }
+
+        /* ── ACTION CARDS ── */
+        .action-card {
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            padding: 32px 28px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--color-card-border);
+            text-align: center;
+            transition: box-shadow var(--duration-fast) var(--ease-standard), transform var(--duration-fast) var(--ease-standard);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+        .action-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+        .action-card__icon {
+            font-size: 2.2rem;
+            background: var(--color-secondary);
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .action-card h3 {
+            font-family: var(--font-family-display);
+            font-size: 1.05rem;
+            color: var(--color-primary-dark);
+        }
+        .action-card p {
+            font-size: 0.85rem;
+            color: var(--color-text-light);
+            line-height: 1.6;
+        }
+        .btn {
+            display: inline-block;
+            background: var(--color-primary);
+            color: #ffffff;
+            border: none;
+            padding: 10px 22px;
+            border-radius: var(--radius-base);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            font-family: var(--font-family-base);
+            transition: background var(--duration-fast) var(--ease-standard), box-shadow var(--duration-fast) var(--ease-standard);
+            margin-top: 6px;
+        }
+        .btn:hover { background: var(--color-primary-hover); box-shadow: var(--shadow-md); }
+        .btn--outline {
+            background: transparent;
+            color: var(--color-primary);
+            border: 1.5px solid var(--color-primary);
+        }
+        .btn--outline:hover { background: var(--color-secondary); box-shadow: none; }
+
+        /* ── DEADLINE BANNER ── */
+        .deadline-banner {
+            background: linear-gradient(90deg, #00221c 0%, #018476 100%);
+            color: #fff;
+            border-radius: var(--radius-lg);
+            padding: 20px 28px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 32px;
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+        }
+        .deadline-banner__icon { font-size: 1.8rem; flex-shrink: 0; }
+        .deadline-banner__text strong { font-size: 1rem; display: block; margin-bottom: 4px; }
+        .deadline-dates {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+        .deadline-chip {
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-size: 0.82rem;
+            color: #A5cfe3;
+        }
+        .deadline-chip strong { color: #fff; display: block; font-size: 0.85rem; }
+
+        /* ── ÉTAPES SECTION ── */
+        .steps-row { display: flex; gap: 0; margin-bottom: 32px; flex-wrap: wrap; }
+        .step {
+            flex: 1;
+            min-width: 160px;
+            text-align: center;
+            padding: 24px 16px;
+            position: relative;
+        }
+        .step:not(:last-child)::after {
+            content: '→';
+            position: absolute;
+            right: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--color-primary);
+            font-size: 1.2rem;
+        }
+        .step__number {
+            width: 40px;
+            height: 40px;
+            background: var(--color-primary);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            margin: 0 auto 12px auto;
+        }
+        .step h4 { font-size: 0.88rem; color: var(--color-primary-dark); margin-bottom: 6px; font-weight: 600; }
+        .step p { font-size: 0.8rem; color: var(--color-text-light); line-height: 1.5; }
+
+        /* ── DISCLAIMER ── */
+        .disclaimer-box {
+            background: var(--color-surface);
+            color: var(--color-text-light);
+            padding: 16px 20px;
+            border-radius: var(--radius-base);
+            margin: 24px 0 8px 0;
+            font-size: 0.82rem;
+            border: 1px solid var(--color-card-border);
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        /* ── FOOTER ── */
+        .footer {
+            background: var(--color-surface);
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid var(--color-border);
+            font-size: 0.78rem;
+            color: var(--color-text-secondary);
+        }
+        .footer a { color: var(--color-primary); text-decoration: none; }
+
+        /* ── SECTION DIVIDER ── */
+        .section-divider { margin: 40px 0 32px 0; border: none; border-top: 1px solid var(--color-border); }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="app-header">
+        <div class="app-header__content">
+            <span class="app-header__badge">Saison fiscale 2025</span>
+            <h1 class="app-header__title">Déclaration de revenus</h1>
+            <p class="app-header__subtitle">
+                Accompagnement personnalisé pour la production de vos déclarations fédérale et provinciale · Particuliers &amp; travailleurs autonomes · Québec
+            </p>
+            <div class="header-cta-row">
+                <a href="#demande" class="btn-header btn-header--primary">📋 Faire une demande</a>
+                <a href="assets/Aide-memoire-fiscal-2025.pdf" download class="btn-header btn-header--outline">⬇ Télécharger l'aide-mémoire</a>
+                <a href="#depot" class="btn-header btn-header--outline">📁 Déposer mes documents</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-content-wrap">
+        <div class="container">
+
+            <!-- BANNIÈRE DATES LIMITES -->
+            <div class="deadline-banner">
+                <div class="deadline-banner__icon">📅</div>
+                <div class="deadline-banner__text">
+                    <strong>Dates limites — Année d'imposition 2025</strong>
+                    <div class="deadline-dates">
+                        <span class="deadline-chip"><strong>2 mars 2026</strong>Dernier jour cotisation REER</span>
+                        <span class="deadline-chip"><strong>30 avril 2026</strong>Déclaration — Particuliers</span>
+                        <span class="deadline-chip"><strong>30 avril 2026</strong>Paiement du solde d'impôt</span>
+                        <span class="deadline-chip"><strong>15 juin 2026</strong>Déclaration — Travailleur autonome</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SERVICES -->
+            <p class="section-title">Mes services de déclaration fiscale</p>
+            <p class="section-intro">
+                Conseiller en sécurité financière depuis 2019, j'offre un service de prise en charge complète pour la production de vos déclarations de revenus — fédérale (T1) et provinciale (TP-1). Mon approche intègre la fiscalité à votre planification financière globale pour limiter les angles morts et optimiser votre situation.
+            </p>
+
+            <div class="two-col">
+                <div class="card card--highlight">
+                    <h2>🏠 Particuliers</h2>
+                    <ul class="info-list">
+                        <li>Salariés, retraités, étudiants</li>
+                        <li>Revenus de placements (T5, T3, T5008)</li>
+                        <li>Revenus locatifs et gains en capital</li>
+                        <li>Frais médicaux, dons, crédits familiaux</li>
+                        <li>Optimisation REER, CELI, CELIAPP</li>
+                        <li>Situations particulières : décès, séparation, immigration</li>
+                    </ul>
+                </div>
+                <div class="card card--highlight">
+                    <h2>🔧 Travailleurs autonomes</h2>
+                    <ul class="info-list">
+                        <li>Revenus d'entreprise — état des résultats complet</li>
+                        <li>Dépenses admissibles : véhicule, bureau à domicile, équipements</li>
+                        <li>Acomptes provisionnels fédéral et Québec</li>
+                        <li>Cotisations RRQ, RQAP (double cotisation)</li>
+                        <li>TPS/TVQ si applicable</li>
+                        <li>Planification des revenus pour minimiser l'impôt</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- PROCESSUS -->
+            <hr class="section-divider">
+            <p class="section-title">Comment ça fonctionne</p>
+            <div class="steps-row">
+                <div class="step">
+                    <div class="step__number">1</div>
+                    <h4>Demande en ligne</h4>
+                    <p>Remplissez le formulaire de prise en charge en quelques minutes</p>
+                </div>
+                <div class="step">
+                    <div class="step__number">2</div>
+                    <h4>Dépôt sécurisé</h4>
+                    <p>Téléversez vos documents via mon espace SharePoint sécurisé</p>
+                </div>
+                <div class="step">
+                    <div class="step__number">3</div>
+                    <h4>Traitement</h4>
+                    <p>Je prépare vos déclarations et vous contacte si des informations manquent</p>
+                </div>
+                <div class="step">
+                    <div class="step__number">4</div>
+                    <h4>Révision &amp; signature</h4>
+                    <p>Vous révisez et signez avant la transmission aux autorités fiscales</p>
+                </div>
+                <div class="step">
+                    <div class="step__number">5</div>
+                    <h4>Transmission</h4>
+                    <p>Envoi électronique sécurisé à l'ARC et à Revenu Québec</p>
+                </div>
+            </div>
+
+            <!-- 3 CTA CARDS -->
+            <hr class="section-divider">
+            <p class="section-title">Par où commencer ?</p>
+            <div class="three-col" id="demande">
+                <div class="action-card">
+                    <div class="action-card__icon">⬇</div>
+                    <h3>Aide-mémoire fiscal 2025</h3>
+                    <p>Liste complète des feuillets et documents à rassembler avant votre rendez-vous. Particuliers &amp; travailleurs autonomes.</p>
+                    <a href="assets/Aide-memoire-fiscal-2025.pdf" download class="btn">Télécharger le PDF</a>
+                </div>
+                <div class="action-card">
+                    <div class="action-card__icon">📋</div>
+                    <h3>Demande de prise en charge</h3>
+                    <p>Complétez ce formulaire pour m'informer de votre situation. Je vous reviens dans les 24 h ouvrables pour confirmer la prise en charge.</p>
+                    <a href="#" class="btn" target="_blank" rel="noopener">Remplir le formulaire</a>
+                    <p style="font-size:0.75rem;color:var(--color-text-secondary);margin-top:8px;">Formulaire Microsoft Forms à venir</p>
+                </div>
+                <div class="action-card" id="depot">
+                    <div class="action-card__icon">📁</div>
+                    <h3>Dépôt sécurisé des documents</h3>
+                    <p>Téléversez vos feuillets fiscaux dans mon espace SharePoint chiffré. Vos données sont protégées par l'infrastructure Microsoft 365.</p>
+                    <a href="#" class="btn" target="_blank" rel="noopener">Accéder au portail</a>
+                    <p style="font-size:0.75rem;color:var(--color-text-secondary);margin-top:8px;">Portail SharePoint à venir</p>
+                </div>
+            </div>
+
+            <!-- DOCUMENTS REQUIS RAPPEL -->
+            <hr class="section-divider">
+            <div class="two-col">
+                <div class="card">
+                    <h2>📋 Documents essentiels à prévoir</h2>
+                    <ul class="info-list">
+                        <li><strong>T4 / RL-1</strong> — Revenus d'emploi</li>
+                        <li><strong>T5 / RL-3</strong> — Intérêts et dividendes</li>
+                        <li><strong>T3 / RL-16</strong> — Fonds communs</li>
+                        <li><strong>T5008 / RL-18</strong> — Transactions boursières</li>
+                        <li><strong>Reçus REER</strong> — Mars–déc. 2025 ET janv.–fév. 2026</li>
+                        <li><strong>Avis de cotisation 2024</strong> — ARC &amp; Revenu Québec</li>
+                        <li><strong>RL-31</strong> — Locataire au Québec (crédit solidarité)</li>
+                        <li><strong>Reçus médicaux</strong> — 12 mois consécutifs</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h2>🔧 Travailleur autonome — en plus</h2>
+                    <ul class="info-list">
+                        <li>Revenus bruts — toutes factures et dépôts 2025</li>
+                        <li>Dépenses d'affaires détaillées avec reçus</li>
+                        <li>Carnet de route si usage du véhicule</li>
+                        <li>% bureau à domicile (superficie dédiée)</li>
+                        <li>Relevés d'acomptes provisionnels 2025</li>
+                        <li>Cotisations professionnelles et syndicales</li>
+                        <li>Cryptomonnaies — historique complet des transactions</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="disclaimer-box">
+                Ce service est offert à titre de conseiller en sécurité financière. Les informations fiscales présentées sont basées sur les règles en vigueur pour l'année d'imposition 2025.
+                Pour les situations complexes (société par actions, fiducie, international), consultez un fiscaliste ou un CPA.
+                <br><br>
+                <strong>Nicolas Stoltz</strong> · Conseiller en sécurité financière — Groupe Sentinel ·
+                <a href="tel:5819966708">581 996-6708</a> ·
+                <a href="mailto:nstoltz@sentinelgroup.ca">nstoltz@sentinelgroup.ca</a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>© 2026 · Nicolas Stoltz Services Financiers ·
+           <a href="https://www.nicolasstoltz.com">nicolasstoltz.com</a>
+        </p>
+    </footer>
+
+</body>
+</html>
