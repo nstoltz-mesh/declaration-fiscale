@@ -706,8 +706,9 @@
 
     <script>
         function openModal() {
-            // Scroll vers le haut en douceur, puis ouvre le modal après 300ms
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Cibler l'élément scrollable réel (html) + fallback body
+            document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
+            document.body.scrollTo({ top: 0, behavior: 'smooth' });
             setTimeout(function() {
                 document.getElementById('depositModal').classList.add('active');
                 document.getElementById('modalOverlay').classList.add('active');
@@ -722,9 +723,7 @@
         }
 
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeModal();
-            }
+            if (e.key === 'Escape') { closeModal(); }
         });
     </script>
 
