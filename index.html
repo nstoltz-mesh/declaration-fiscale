@@ -61,23 +61,23 @@
             animation: fadeIn 0.2s ease-out;
         }
         .modal-overlay.active { display: block; }
-        
+
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
-        
+
         @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translate(-50%, calc(-50% + 20px));
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translate(-50%, -50%);
             }
         }
-        
+
         .modal {
             position: fixed;
             top: 50%;
@@ -90,17 +90,19 @@
             width: 90%;
             z-index: 9999;
             display: none;
+        }
+        .modal.active {
+            display: block;
             animation: slideUp 0.3s var(--ease-standard);
         }
-        .modal.active { display: block; }
-        
+
         .modal-header {
             background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
             padding: 28px;
             border-radius: var(--radius-lg) var(--radius-lg) 0 0;
             position: relative;
         }
-        
+
         .modal-close {
             position: absolute;
             top: 16px;
@@ -122,7 +124,7 @@
             background: rgba(255,255,255,0.25);
             transform: rotate(90deg);
         }
-        
+
         .modal-icon {
             width: 64px;
             height: 64px;
@@ -135,7 +137,7 @@
             font-size: 2rem;
             margin: 0 auto 16px;
         }
-        
+
         .modal-header h2 {
             font-family: var(--font-family-display);
             font-size: 1.4rem;
@@ -143,11 +145,11 @@
             text-align: center;
             margin: 0;
         }
-        
+
         .modal-body {
             padding: 32px 28px;
         }
-        
+
         .modal-text {
             font-size: 0.95rem;
             line-height: 1.7;
@@ -155,7 +157,7 @@
             margin-bottom: 24px;
             text-align: center;
         }
-        
+
         .modal-info-box {
             background: rgba(1,132,118,0.08);
             border-left: 3px solid var(--color-primary);
@@ -163,28 +165,28 @@
             padding: 16px;
             margin-bottom: 24px;
         }
-        
+
         .modal-info-box p {
             font-size: 0.88rem;
             color: var(--color-text);
             line-height: 1.6;
             margin-bottom: 8px;
         }
-        
+
         .modal-info-box p:last-child {
             margin-bottom: 0;
         }
-        
+
         .modal-info-box strong {
             color: var(--color-primary-dark);
         }
-        
+
         .modal-actions {
             display: flex;
             gap: 12px;
             flex-wrap: wrap;
         }
-        
+
         .modal-btn {
             flex: 1;
             min-width: 140px;
@@ -199,7 +201,7 @@
             transition: all var(--duration-fast) var(--ease-standard);
             display: inline-block;
         }
-        
+
         .modal-btn--primary {
             background: var(--color-primary);
             color: #ffffff;
@@ -209,7 +211,7 @@
             background: var(--color-primary-hover);
             box-shadow: var(--shadow-md);
         }
-        
+
         .modal-btn--outline {
             background: transparent;
             color: var(--color-primary);
@@ -532,7 +534,7 @@
                 <p>Remplissez le formulaire de demande et vous recevrez automatiquement le lien SharePoint par courriel.</p>
             </div>
             <div class="modal-actions">
-                <a href="mailto:nstoltz@sentinelgroup.ca?subject=Demande%20d'accès%20-%20Dépôt%20de%20documents%20fiscaux&body=Bonjour%20Nicolas%2C%0A%0AJe%20souhaite%20recevoir%20le%20lien%20pour%20déposer%20mes%20documents%20fiscaux%20de%20façon%20sécurisée.%0A%0AMerci%21" class="modal-btn modal-btn--primary">
+                <a href="mailto:nstoltz@sentinelgroup.ca?subject=Demande%20d'acc%C3%A8s%20-%20D%C3%A9p%C3%B4t%20de%20documents%20fiscaux&body=Bonjour%20Nicolas%2C%0A%0AJe%20souhaite%20recevoir%20le%20lien%20pour%20d%C3%A9poser%20mes%20documents%20fiscaux%20de%20fa%C3%A7on%20s%C3%A9curis%C3%A9e.%0A%0AMerci%21" class="modal-btn modal-btn--primary">
                     ✉️ Envoyer un courriel
                 </a>
                 <a href="https://forms.office.com/r/2VVCZCeaHH" class="modal-btn modal-btn--outline" target="_blank" rel="noopener">
@@ -704,9 +706,13 @@
 
     <script>
         function openModal() {
-            document.getElementById('depositModal').classList.add('active');
-            document.getElementById('modalOverlay').classList.add('active');
-            document.body.style.overflow = 'hidden';
+            // Scroll vers le haut en douceur, puis ouvre le modal après 300ms
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(function() {
+                document.getElementById('depositModal').classList.add('active');
+                document.getElementById('modalOverlay').classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }, 300);
         }
 
         function closeModal() {
