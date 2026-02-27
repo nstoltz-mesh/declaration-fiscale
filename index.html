@@ -47,6 +47,178 @@
         }
         body { min-height:100vh; display:flex; flex-direction:column; }
 
+        /* ── MODAL ── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,34,28,0.75);
+            z-index: 9998;
+            backdrop-filter: blur(4px);
+            animation: fadeIn 0.2s ease-out;
+        }
+        .modal-overlay.active { display: block; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 24px 48px rgba(0,34,28,0.2);
+            max-width: 520px;
+            width: 90%;
+            z-index: 9999;
+            display: none;
+            animation: slideUp 0.3s var(--ease-standard);
+        }
+        .modal.active { display: block; }
+        
+        .modal-header {
+            background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+            padding: 28px;
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #ffffff;
+            transition: all var(--duration-fast) var(--ease-standard);
+        }
+        .modal-close:hover {
+            background: rgba(255,255,255,0.25);
+            transform: rotate(90deg);
+        }
+        
+        .modal-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(255,255,255,0.15);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 16px;
+        }
+        
+        .modal-header h2 {
+            font-family: var(--font-family-display);
+            font-size: 1.4rem;
+            color: #ffffff;
+            text-align: center;
+            margin: 0;
+        }
+        
+        .modal-body {
+            padding: 32px 28px;
+        }
+        
+        .modal-text {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--color-text-light);
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        
+        .modal-info-box {
+            background: rgba(1,132,118,0.08);
+            border-left: 3px solid var(--color-primary);
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .modal-info-box p {
+            font-size: 0.88rem;
+            color: var(--color-text);
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+        
+        .modal-info-box p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .modal-info-box strong {
+            color: var(--color-primary-dark);
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .modal-btn {
+            flex: 1;
+            min-width: 140px;
+            padding: 12px 20px;
+            border-radius: var(--radius-base);
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: var(--font-family-base);
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: all var(--duration-fast) var(--ease-standard);
+            display: inline-block;
+        }
+        
+        .modal-btn--primary {
+            background: var(--color-primary);
+            color: #ffffff;
+            border: none;
+        }
+        .modal-btn--primary:hover {
+            background: var(--color-primary-hover);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .modal-btn--outline {
+            background: transparent;
+            color: var(--color-primary);
+            border: 1.5px solid var(--color-primary);
+        }
+        .modal-btn--outline:hover {
+            background: var(--color-secondary);
+        }
+
         /* ── HEADER ── */
         .app-header {
             width: 100%;
@@ -339,6 +511,37 @@
 </head>
 <body>
 
+    <!-- MODAL DÉPÔT DOCUMENTS -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal()"></div>
+    <div class="modal" id="depositModal">
+        <div class="modal-header">
+            <div class="modal-close" onclick="closeModal()">×</div>
+            <div class="modal-icon">📁</div>
+            <h2>Dépôt sécurisé de documents</h2>
+        </div>
+        <div class="modal-body">
+            <p class="modal-text">
+                Pour assurer la sécurité de vos informations personnelles, l'accès au portail SharePoint est envoyé uniquement sur demande.
+            </p>
+            <div class="modal-info-box">
+                <p><strong>📧 Option 1 : Demande par courriel</strong></p>
+                <p>Écrivez-moi à <strong>nstoltz@sentinelgroup.ca</strong> et je vous enverrai le lien sécurisé dans les 24 heures ouvrables.</p>
+            </div>
+            <div class="modal-info-box">
+                <p><strong>📋 Option 2 : Formulaire de prise en charge</strong></p>
+                <p>Remplissez le formulaire de demande et vous recevrez automatiquement le lien SharePoint par courriel.</p>
+            </div>
+            <div class="modal-actions">
+                <a href="mailto:nstoltz@sentinelgroup.ca?subject=Demande%20d'accès%20-%20Dépôt%20de%20documents%20fiscaux&body=Bonjour%20Nicolas%2C%0A%0AJe%20souhaite%20recevoir%20le%20lien%20pour%20déposer%20mes%20documents%20fiscaux%20de%20façon%20sécurisée.%0A%0AMerci%21" class="modal-btn modal-btn--primary">
+                    ✉️ Envoyer un courriel
+                </a>
+                <a href="https://forms.office.com/r/2VVCZCeaHH" class="modal-btn modal-btn--outline" target="_blank" rel="noopener">
+                    📋 Remplir le formulaire
+                </a>
+            </div>
+        </div>
+    </div>
+
     <!-- HEADER -->
     <header class="app-header">
         <div class="app-header__content">
@@ -350,7 +553,7 @@
             <div class="header-cta-row">
                 <a href="https://forms.office.com/r/2VVCZCeaHH" class="btn-header btn-header--primary" target="_blank" rel="noopener">📋 Faire une demande</a>
                 <a href="assets/Aide-memoire-fiscal-2025.pdf" download class="btn-header btn-header--outline">⬇ Télécharger l'aide-mémoire</a>
-                <a href="#depot" class="btn-header btn-header--outline">📁 Déposer mes documents</a>
+                <button onclick="openModal()" class="btn-header btn-header--outline">📁 Déposer mes documents</button>
             </div>
         </div>
     </header>
@@ -454,8 +657,7 @@
                     <div class="action-card__icon">📁</div>
                     <h3>Dépôt sécurisé des documents</h3>
                     <p>Téléversez vos feuillets fiscaux dans mon espace SharePoint chiffré. Vos données sont protégées par l'infrastructure Microsoft 365.</p>
-                    <a href="#" class="btn" target="_blank" rel="noopener">Accéder au portail</a>
-                    <p style="font-size:0.75rem;color:var(--color-text-secondary);margin-top:8px;">Portail SharePoint à venir</p>
+                    <button onclick="openModal()" class="btn">Demander l'accès</button>
                 </div>
             </div>
 
@@ -499,6 +701,26 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function openModal() {
+            document.getElementById('depositModal').classList.add('active');
+            document.getElementById('modalOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('depositModal').classList.remove('active');
+            document.getElementById('modalOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
 
 </body>
 </html>
