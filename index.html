@@ -47,6 +47,178 @@
         }
         body { min-height:100vh; display:flex; flex-direction:column; }
 
+        /* ── MODAL ── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,34,28,0.75);
+            z-index: 9998;
+            backdrop-filter: blur(4px);
+            animation: fadeIn 0.2s ease-out;
+        }
+        .modal-overlay.active { display: block; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 24px 48px rgba(0,34,28,0.2);
+            max-width: 520px;
+            width: 90%;
+            z-index: 9999;
+            display: none;
+            animation: slideUp 0.3s var(--ease-standard);
+        }
+        .modal.active { display: block; }
+        
+        .modal-header {
+            background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+            padding: 28px;
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #ffffff;
+            transition: all var(--duration-fast) var(--ease-standard);
+        }
+        .modal-close:hover {
+            background: rgba(255,255,255,0.25);
+            transform: rotate(90deg);
+        }
+        
+        .modal-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(255,255,255,0.15);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 16px;
+        }
+        
+        .modal-header h2 {
+            font-family: var(--font-family-display);
+            font-size: 1.4rem;
+            color: #ffffff;
+            text-align: center;
+            margin: 0;
+        }
+        
+        .modal-body {
+            padding: 32px 28px;
+        }
+        
+        .modal-text {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--color-text-light);
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        
+        .modal-info-box {
+            background: rgba(1,132,118,0.08);
+            border-left: 3px solid var(--color-primary);
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .modal-info-box p {
+            font-size: 0.88rem;
+            color: var(--color-text);
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+        
+        .modal-info-box p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .modal-info-box strong {
+            color: var(--color-primary-dark);
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .modal-btn {
+            flex: 1;
+            min-width: 140px;
+            padding: 12px 20px;
+            border-radius: var(--radius-base);
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: var(--font-family-base);
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: all var(--duration-fast) var(--ease-standard);
+            display: inline-block;
+        }
+        
+        .modal-btn--primary {
+            background: var(--color-primary);
+            color: #ffffff;
+            border: none;
+        }
+        .modal-btn--primary:hover {
+            background: var(--color-primary-hover);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .modal-btn--outline {
+            background: transparent;
+            color: var(--color-primary);
+            border: 1.5px solid var(--color-primary);
+        }
+        .modal-btn--outline:hover {
+            background: var(--color-secondary);
+        }
+
         /* ── HEADER ── */
         .app-header {
             width: 100%;
@@ -339,166 +511,35 @@
 </head>
 <body>
 
-    <!-- HEADER -->
-    <header class="app-header">
-        <div class="app-header__content">
-            <span class="app-header__badge">Saison fiscale 2025</span>
-            <h1 class="app-header__title">Déclaration de revenus</h1>
-            <p class="app-header__subtitle">
-                Accompagnement personnalisé pour la production de vos déclarations fédérale et provinciale · Particuliers &amp; travailleurs autonomes · Québec
-            </p>
-            <div class="header-cta-row">
-                <a href="https://forms.office.com/r/2VVCZCeaHH" class="btn-header btn-header--primary" target="_blank" rel="noopener">📋 Faire une demande</a>
-                <a href="assets/Aide-memoire-fiscal-2025.pdf" download class="btn-header btn-header--outline">⬇ Télécharger l'aide-mémoire</a>
-                <a href="#depot" class="btn-header btn-header--outline">📁 Déposer mes documents</a>
-            </div>
+    <!-- MODAL DÉPÔT DOCUMENTS -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal()"></div>
+    <div class="modal" id="depositModal">
+        <div class="modal-header">
+            <div class="modal-close" onclick="closeModal()">×</div>
+            <div class="modal-icon">📁</div>
+            <h2>Dépôt sécurisé de documents</h2>
         </div>
-    </header>
-
-    <div class="main-content-wrap">
-        <div class="container">
-
-            <!-- BANNIÈRE DATES LIMITES -->
-            <div class="deadline-banner">
-                <div class="deadline-banner__icon">📅</div>
-                <div class="deadline-banner__text">
-                    <strong>Dates limites — Année d'imposition 2025</strong>
-                    <div class="deadline-dates">
-                        <span class="deadline-chip"><strong>2 mars 2026</strong>Dernier jour cotisation REER</span>
-                        <span class="deadline-chip"><strong>30 avril 2026</strong>Déclaration — Particuliers</span>
-                        <span class="deadline-chip"><strong>30 avril 2026</strong>Paiement du solde d'impôt</span>
-                        <span class="deadline-chip"><strong>15 juin 2026</strong>Déclaration — Travailleur autonome</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SERVICES -->
-            <p class="section-title">Mes services de déclaration fiscale</p>
-            <p class="section-intro">
-                Conseiller en sécurité financière depuis 2019, j'offre un service de prise en charge complète pour la production de vos déclarations de revenus — fédérale (T1) et provinciale (TP-1). Mon approche intègre la fiscalité à votre planification financière globale pour limiter les angles morts et optimiser votre situation.
+        <div class="modal-body">
+            <p class="modal-text">
+                Pour assurer la sécurité de vos informations personnelles, l'accès au portail SharePoint est envoyé uniquement sur demande.
             </p>
-
-            <div class="two-col">
-                <div class="card card--highlight">
-                    <h2>🏠 Particuliers</h2>
-                    <ul class="info-list">
-                        <li>Salariés, retraités, étudiants</li>
-                        <li>Revenus de placements (T5, T3, T5008)</li>
-                        <li>Revenus locatifs et gains en capital</li>
-                        <li>Frais médicaux, dons, crédits familiaux</li>
-                        <li>Optimisation REER, CELI, CELIAPP</li>
-                        <li>Situations particulières : décès, séparation, immigration</li>
-                    </ul>
-                </div>
-                <div class="card card--highlight">
-                    <h2>🔧 Travailleurs autonomes</h2>
-                    <ul class="info-list">
-                        <li>Revenus d'entreprise — état des résultats complet</li>
-                        <li>Dépenses admissibles : véhicule, bureau à domicile, équipements</li>
-                        <li>Acomptes provisionnels fédéral et Québec</li>
-                        <li>Cotisations RRQ, RQAP (double cotisation)</li>
-                        <li>TPS/TVQ si applicable</li>
-                        <li>Planification des revenus pour minimiser l'impôt</li>
-                    </ul>
-                </div>
+            <div class="modal-info-box">
+                <p><strong>📧 Option 1 : Demande par courriel</strong></p>
+                <p>Écrivez-moi à <strong>nstoltz@sentinelgroup.ca</strong> et je vous enverrai le lien sécurisé dans les 24 heures ouvrables.</p>
             </div>
-
-            <!-- PROCESSUS -->
-            <hr class="section-divider">
-            <p class="section-title">Comment ça fonctionne</p>
-            <div class="steps-row">
-                <div class="step">
-                    <div class="step__number">1</div>
-                    <h4>Demande en ligne</h4>
-                    <p>Remplissez le formulaire de prise en charge en quelques minutes</p>
-                </div>
-                <div class="step">
-                    <div class="step__number">2</div>
-                    <h4>Dépôt sécurisé</h4>
-                    <p>Téléversez vos documents via mon espace SharePoint sécurisé</p>
-                </div>
-                <div class="step">
-                    <div class="step__number">3</div>
-                    <h4>Traitement</h4>
-                    <p>Je prépare vos déclarations et vous contacte si des informations manquent</p>
-                </div>
-                <div class="step">
-                    <div class="step__number">4</div>
-                    <h4>Révision &amp; signature</h4>
-                    <p>Vous révisez et signez avant la transmission aux autorités fiscales</p>
-                </div>
-                <div class="step">
-                    <div class="step__number">5</div>
-                    <h4>Transmission</h4>
-                    <p>Envoi électronique sécurisé à l'ARC et à Revenu Québec</p>
-                </div>
+            <div class="modal-info-box">
+                <p><strong>📋 Option 2 : Formulaire de prise en charge</strong></p>
+                <p>Remplissez le formulaire de demande et vous recevrez automatiquement le lien SharePoint par courriel.</p>
             </div>
-
-            <!-- 3 CTA CARDS -->
-            <hr class="section-divider">
-            <p class="section-title">Par où commencer ?</p>
-            <div class="three-col" id="demande">
-                <div class="action-card">
-                    <div class="action-card__icon">⬇</div>
-                    <h3>Aide-mémoire fiscal 2025</h3>
-                    <p>Liste complète des feuillets et documents à rassembler avant votre rendez-vous. Particuliers &amp; travailleurs autonomes.</p>
-                    <a href="assets/Aide-memoire-fiscal-2025.pdf" download class="btn">Télécharger le PDF</a>
-                </div>
-                <div class="action-card">
-                    <div class="action-card__icon">📋</div>
-                    <h3>Demande de prise en charge</h3>
-                    <p>Complétez ce formulaire pour m'informer de votre situation. Je vous reviens dans les 24 h ouvrables pour confirmer la prise en charge.</p>
-                    <a href="https://forms.office.com/r/2VVCZCeaHH" class="btn" target="_blank" rel="noopener">Remplir le formulaire</a>
-                </div>
-                <div class="action-card" id="depot">
-                    <div class="action-card__icon">📁</div>
-                    <h3>Dépôt sécurisé des documents</h3>
-                    <p>Téléversez vos feuillets fiscaux dans mon espace SharePoint chiffré. Vos données sont protégées par l'infrastructure Microsoft 365.</p>
-                    <a href="#" class="btn" target="_blank" rel="noopener">Accéder au portail</a>
-                    <p style="font-size:0.75rem;color:var(--color-text-secondary);margin-top:8px;">Portail SharePoint à venir</p>
-                </div>
-            </div>
-
-            <!-- DOCUMENTS REQUIS RAPPEL -->
-            <hr class="section-divider">
-            <div class="two-col">
-                <div class="card">
-                    <h2>📋 Documents essentiels à prévoir</h2>
-                    <ul class="info-list">
-                        <li><strong>T4 / RL-1</strong> — Revenus d'emploi</li>
-                        <li><strong>T5 / RL-3</strong> — Intérêts et dividendes</li>
-                        <li><strong>T3 / RL-16</strong> — Fonds communs</li>
-                        <li><strong>T5008 / RL-18</strong> — Transactions boursières</li>
-                        <li><strong>Reçus REER</strong> — Mars–déc. 2025 ET janv.–fév. 2026</li>
-                        <li><strong>Avis de cotisation 2024</strong> — ARC &amp; Revenu Québec</li>
-                        <li><strong>RL-31</strong> — Locataire au Québec (crédit solidarité)</li>
-                        <li><strong>Reçus médicaux</strong> — 12 mois consécutifs</li>
-                    </ul>
-                </div>
-                <div class="card">
-                    <h2>🔧 Travailleur autonome — en plus</h2>
-                    <ul class="info-list">
-                        <li>Revenus bruts — toutes factures et dépôts 2025</li>
-                        <li>Dépenses d'affaires détaillées avec reçus</li>
-                        <li>Carnet de route si usage du véhicule</li>
-                        <li>% bureau à domicile (superficie dédiée)</li>
-                        <li>Relevés d'acomptes provisionnels 2025</li>
-                        <li>Cotisations professionnelles et syndicales</li>
-                        <li>Cryptomonnaies — historique complet des transactions</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="disclaimer-box">
-                Ce service est offert à titre de conseiller en sécurité financière. Les informations fiscales présentées sont basées sur les règles en vigueur pour l'année d'imposition 2025.
-                Pour les situations complexes (société par actions, fiducie, international), consultez un fiscaliste ou un CPA.
-                <br><br>
-                <strong>Nicolas Stoltz</strong> · Conseiller en sécurité financière — Groupe Sentinel ·
-                <a href="tel:5819966708">581 996-6708</a> ·
-                <a href="mailto:nstoltz@sentinelgroup.ca">nstoltz@sentinelgroup.ca</a>
+            <div class="modal-actions">
+                <a href="mailto:nstoltz@sentinelgroup.ca?subject=Demande%20d'accès%20-%20Dépôt%20de%20documents%20fiscaux&body=Bonjour%20Nicolas%2C%0A%0AJe%20souhaite%20recevoir%20le%20lien%20pour%20déposer%20mes%20documents%20fiscaux%20de%20façon%20sécurisée.%0A%0AMerci%21" class="modal-btn modal-btn--primary">
+                    ✉️ Envoyer un courriel
+                </a>
+                <a href="https://forms.office.com/r/2VVCZCeaHH" class="modal-btn modal-btn--outline" target="_blank" rel="noopener">
+                    📋 Remplir le formulaire
+                </a>
             </div>
         </div>
     </div>
 
-</body>
-</html>
+    <!-- HEADER -->
